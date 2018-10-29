@@ -94,6 +94,11 @@ class Docket(IndexedOrderedStore):
         """The total number of items in the store."""
         return self.nonpriority_count() + self.priority_count()
 
+    def oldest_genpop_priority_case_age(self):
+        """The arrival time of the oldest genpop priority case"""
+        cases = [case.arrived for case in self.priority_store.items if case.judge == None]
+        return cases[0] if cases else maxsize
+
     def get_priority_appeals(self, judge = None, limit = maxsize):
         """Request to get appeals from the docket where priority is truthy.
 
